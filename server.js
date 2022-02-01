@@ -8,7 +8,7 @@ const handle = nextApp.getRequestHandler();
 require("dotenv").config({ path: "./config.env" });
 const connectDb = require("./utilsServer/connectDb");
 const PORT = process.env.PORT || 3000;
-app.use(express.json()); // this is the body parser
+app.use(express.json());
 connectDb();
 
 nextApp.prepare().then(() => {
