@@ -1,9 +1,9 @@
 {
-  "name": "inder-social-media",
+  "name": "jbouche-social-media",
   "version": "0.1.0",
   "private": false,
   "scripts": {
-    "dev": "next",
+    "dev": "export SET NODE_OPTIONS=--openssl-legacy-provider && nodemon server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js"
   },
@@ -23,6 +23,7 @@
     "next": "^10.2.3",
     "nodemailer": "^6.7.2",
     "nodemailer-sendgrid-transport": "^0.2.0",
+    "nodemon": "^2.0.15",
     "nookies": "^2.5.2",
     "nprogress": "^0.2.0",
     "react": "^16.14.0",
