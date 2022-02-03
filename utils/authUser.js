@@ -37,6 +37,13 @@ export const redirectUser=(ctx, location)=>{
     }
 }
 
+export const logoutUser=email=>{
+    cookie.set('userEmail', email)
+    cookie.remove('token')
+    Router.push('/login');
+    Router.reload()
+}
+
 const setToken = token => {
     cookie.set('token', token)
 
