@@ -98,7 +98,7 @@ function Signup() {
 
     if (media !== null && !profilePicUrl) {
       setFormLoading(false);
-      return setErrorMsg("Error Uploading Image");
+      return setErrorMsg("Error uploading image");
     }
 
     await registerUser(user, profilePicUrl, setErrorMsg, setFormLoading);
