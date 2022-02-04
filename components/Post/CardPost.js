@@ -133,14 +133,14 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
                 />
 
                 <LikesList
-                postId={post._id}
-                trigger={
-                    likes.length > 0 && (
-                    <span className="spanLikesList">
-                        {`${likes.length} ${likes.length === 1 ? "like" : "likes"}`}
-                    </span>
-                    )
-                }
+                    postId={post._id}
+                    trigger={
+                        likes.length > 0 && (
+                        <span className="spanLikesList">
+                            {`${likes.length} ${likes.length === 1 ? "like" : "likes"}`}
+                        </span>
+                        )
+                    }
                 />
 
                 <Icon
