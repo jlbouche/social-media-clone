@@ -8,23 +8,24 @@ function CommentInputField({ postId, user, setComments }) {
 
     return (
         <Form
-        reply
-        onSubmit={async e => {
-            e.preventDefault();
-            setLoading(true);
-            await postComment(postId, user, text, setComments, setText);
+            reply
+            onSubmit={async e => {
+                e.preventDefault();
+                setLoading(true);
+                await postComment(postId, user, text, setComments, setText);
 
-            setLoading(false);
-        }}>
+                setLoading(false);
+            }}
+        >
         <Form.Input
             value={text}
             onChange={e => setText(e.target.value)}
             placeholder="Add Comment"
             action={{
-            color: "blue",
-            icon: "edit",
-            loading: loading,
-            disabled: text === "" || loading
+                color: "blue",
+                icon: "edit",
+                loading: loading,
+                disabled: text === "" || loading
             }}
         />
         </Form>

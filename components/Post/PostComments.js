@@ -27,9 +27,9 @@ function PostComments({ comment, user, setComments, postId }) {
                         color="red"
                         name="trash"
                         onClick={async () => {
-                        setDisabled(true);
-                        await deleteComment(postId, comment._id, setComments);
-                        setDisabled(false);
+                            setDisabled(true);
+                            await deleteComment(postId, comment._id, setComments);
+                            setDisabled(false);
                         }}
                     />
                     )}
