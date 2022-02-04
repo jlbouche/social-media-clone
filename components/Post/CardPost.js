@@ -45,10 +45,11 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
         <>
         {showModal && (
             <Modal
-            open={showModal}
-            closeIcon
-            closeOnDimmerClick
-            onClose={() => setShowModal(false)}>
+                open={showModal}
+                closeIcon
+                closeOnDimmerClick
+                onClose={() => setShowModal(false)}
+            >
             <Modal.Content>
                 {post.picUrl ? (
                 <ImageModal {...addPropsToModal()} />
@@ -63,13 +64,13 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
             <Card color="teal" fluid>
             {post.picUrl && (
                 <Image
-                src={post.picUrl}
-                style={{ cursor: "pointer" }}
-                floated="left"
-                wrapped
-                ui={false}
-                alt="PostImage"
-                onClick={() => setShowModal(true)}
+                    src={post.picUrl}
+                    style={{ cursor: "pointer" }}
+                    floated="left"
+                    wrapped
+                    ui={false}
+                    alt="PostImage"
+                    onClick={() => setShowModal(true)}
                 />
             )}
 
@@ -83,10 +84,10 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
                     position="top right"
                     trigger={
                         <Image
-                        src="/deleteIcon.svg"
-                        style={{ cursor: "pointer" }}
-                        size="mini"
-                        floated="right"
+                            src="/deleteIcon.svg"
+                            style={{ cursor: "pointer" }}
+                            size="mini"
+                            floated="right"
                         />
                     }>
                     <Header as="h4" content="Are you sure?" />
