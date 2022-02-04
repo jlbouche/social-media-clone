@@ -18,8 +18,8 @@ function CreatePost({ user, setPosts }) {
         const { name, value, files } = e.target;
 
         if (name === "media") {
-        setMedia(files[0]);
-        setMediaPreview(URL.createObjectURL(files[0]));
+            setMedia(files[0]);
+            setMediaPreview(URL.createObjectURL(files[0]));
         }
 
         setNewPost(prev => ({ ...prev, [name]: value }));
@@ -41,20 +41,20 @@ function CreatePost({ user, setPosts }) {
         let picUrl;
 
         if (media !== null) {
-        picUrl = await uploadPic(media);
-        if (!picUrl) {
-            setLoading(false);
-            return setError("Error Uploading Image");
-        }
+            picUrl = await uploadPic(media);
+            if (!picUrl) {
+                setLoading(false);
+                return setError("Error Uploading Image");
+            }
         }
 
         await submitNewPost(
-        newPost.text,
-        newPost.location,
-        picUrl,
-        setPosts,
-        setNewPost,
-        setError
+            newPost.text,
+            newPost.location,
+            picUrl,
+            setPosts,
+            setNewPost,
+            setError
         );
 
         setMedia(null);
