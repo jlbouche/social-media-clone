@@ -3,10 +3,14 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import baseUrl from "../utils/baseUrl";
 import { parseCookies } from "nookies";
-import { NoProfile } from "../components/Layout/NoData";
+import { NoProfile, NoProfilePosts } from "../components/Layout/NoData";
 import cookie from "js-cookie";
 import {Grid} from 'semantic-ui-react';
 import ProfileMenuTabs from "../components/Profile/ProfileMenuTabs";
+import ProfileHeader from "../components/Profile/ProfileHeader";
+import CardPost from "../components/Post/CardPost";
+import { PlaceHolderPosts } from "../components/Layout/PlaceHolderGroup";
+import {PostDeleteToastr, Toastr} from '../components/Layout/Toastr'
 
 export default function ProfilePage({
     errorLoading,
@@ -26,6 +30,8 @@ export default function ProfilePage({
     const handleItemClick = item =>setActiveItem(item);
 
     const [loggedUserFollowStats, setUserFollowStats] = useState(userFollowStats)
+
+    const [showToastr, setShowToastr] = useState(false)
 
     const ownAccount = profile.user._id === user._id;
 
@@ -51,8 +57,13 @@ export default function ProfilePage({
         getPosts();
     }, [router.query.username]);
 
+    useEffect(() => {
+        showToastr && setTimeout(()=> setShowTastr(false), 3000)
+    }, [showToastr])
+
     return (
         <>
+        {showToastr && <PostDeleteToastr/>}
             <Grid stackable>
                 <Grid.Row>
                     <Grid.Column>
@@ -64,6 +75,36 @@ export default function ProfilePage({
                             ownAccount={ownAccount}
                             loggedUserFollowStats={loggedUserFollowStats}
                             />
+                    </Grid.Column>
+                </Grid.Row>
+                <Grid.Row>
+                    <Grid.Column>
+                        {activeItem==='profile' &&
+                            <>
+                                <ProfileHeader profile={profile}
+                                    ownAccount={ownAccount}
+                                    loggedUserFollowStats={loggedUserFollowStats}
+                                    setUserFollowStats={setUserFollowStats}
+                                />
+
+                                {loading ? (
+                                    <PlaceHolderPosts />
+                                    
+                                ):( 
+                                    posts.length>0 ?
+                                    posts.map(post => (
+                                        <CardPost 
+                                            key={post._id}
+                                            post={post}
+                                            user={user}
+                                            setPosts={setPosts}
+                                            setShowToaster={setShowToastr}
+                                    />
+                                    )): <NoProfilePosts />
+                                )}
+                            </>
+                        
+                        }
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
