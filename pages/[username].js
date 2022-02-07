@@ -10,7 +10,9 @@ import ProfileMenuTabs from "../components/Profile/ProfileMenuTabs";
 import ProfileHeader from "../components/Profile/ProfileHeader";
 import CardPost from "../components/Post/CardPost";
 import { PlaceHolderPosts } from "../components/Layout/PlaceHolderGroup";
-import {PostDeleteToastr, Toastr} from '../components/Layout/Toastr'
+import {PostDeleteToastr, Toastr} from '../components/Layout/Toastr';
+import Followers from '../components/Profile/Followers';
+import Following from '../components/Profile/Following';
 
 export default function ProfilePage({
     errorLoading,
@@ -105,6 +107,25 @@ export default function ProfilePage({
                             </>
                         
                         }
+
+                        {activeItem==='followers' && (
+                            <Followers 
+                                user={user}
+                                loggedUserFollowStats={loggedUserFollowStats}
+                                setUserFollowStats={setUserFollowStats}
+                                profileUserId={profile.user._id}
+                            />
+                        )}
+
+                        {activeItem==='following' && (
+                            <Following 
+                                user={user}
+                                loggedUserFollowStats={loggedUserFollowStats}
+                                setUserFollowStats={setUserFollowStats}
+                                profileUserId={profile.user._id}
+                            />
+                        )}
+                        
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
