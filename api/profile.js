@@ -1,7 +1,7 @@
 const express=require('express')
 const authMiddleware = require('../middleware/authMiddleware')
 const router=express.Router()
-const UserMode=require('../models/UserModel')
+const UserModel=require('../models/UserModel')
 const ProfileModel=require('../models/ProfileModel')
 const FollowerModel=require('../models/FollowerModel')
 const PostModel=require('../models/PostModel')
@@ -16,7 +16,7 @@ router.get('/:username', authMiddleware, async(req,res)=>{
             return res.status(404).send('User not found')
         }
 
-        const profile= awaitProfileModel.findOne({user: user._id}).populate('user')
+        const profile= await ProfileModel.findOne({user: user._id}).populate('user')
 
         const profileFollowStats = await FollowerModel.findOne({user: user._id});
 
