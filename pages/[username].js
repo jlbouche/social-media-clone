@@ -13,6 +13,7 @@ import ProfileHeader from "../components/Profile/ProfileHeader";
 import Followers from "../components/Profile/Followers";
 import Following from "../components/Profile/Following";
 import { PostDeleteToastr } from "../components/Layout/Toastr";
+import UpdateProfile from '../components/Profile/UpdateProfile';
 
 function ProfilePage({
     errorLoading,
@@ -125,6 +126,7 @@ function ProfilePage({
                     profileUserId={profile.user._id}
                 />
                 )}
+                {activeItem === 'updateProfile' && <UpdateProfile Profile={profile}/>}
             </Grid.Column>
             </Grid.Row>
         </Grid>
