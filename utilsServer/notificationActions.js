@@ -42,25 +42,76 @@ const newLikeNotification = async(userId, postId, userToNotifyId) => {
     }
 }
 
-const removeLikeNotification = async(userId, postId, userToNotifyId) => {
-
+const removeLikeNotification = async (userId, postId, userToNotifyId) => {
     try {
-        const user = await NotificationModel.findOne({user: userToNotifyId})
-        const notificationToRemove = user.notifications.find(notification=> 
-            notification.type==='newLike' && 
-            notification.post.toString() === postId &&
-            notification.user.toString() === userId
-        )
-        
-        const indexOf=user.notifications.map(notification => notification._id.toString()).indexOf(notificationToRemove._id.toString());
+   
+        await NotificationModel.findOneAndUpdate(
+        { user: userToNotifyId },
+        {
+          $pull: {
+            notifications: {
+              type: "newLike",
+              user: userId,
+              post: postId
+            }
+          }
+        }
+      );
+   
+      return;
+    } catch (error) {
+      console.error(error);
+    }
+};
 
-        await user.notifications.splice(indexOf, 1)
+const newCommentNotification = async(postId, commentId, userId, userToNotifyId, text) =>{
+    
+    try {
 
-        await user.save();
+        const userToNotify = await NotificationModel.findOne({user: userToNotifyId})
+
+        const newNotification = {
+            type: "newComment",
+            user: userid,
+            post: postId,
+            commentId,
+            text,
+            date: Date.now()
+        }
+
+        await userToNotify.notifications.unshift(newNotification)
+
+        await userToNotify.save()
+
+        await setNotificationToUnread(usertoNotifyId)
+
+        return;
 
     } catch (error) {
-        console.error(error)
+        console.error(error);
     }
 }
 
-module.exports={newLikeNotification, removeLikeNotification}
+const removeCommentNotification = async (postId, commentId, userId, userToNotifyId) => {
+    try {
+      await NotificationModel.findOneAndUpdate(
+        { user: userToNotifyId },
+        {
+          $pull: {
+            notifications: {
+              type: "newComment",
+              user: userId,
+              post: postId,
+              commentId: commentId
+            }
+          }
+        }
+      );
+   
+      return;
+    } catch (error) {
+      console.error(error);
+    }
+};
+
+module.exports={newLikeNotification, removeLikeNotification, newCommentNotification, removeCommentNotification}
