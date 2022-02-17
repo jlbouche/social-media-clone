@@ -5,10 +5,12 @@ const UserModel = require("../models/UserModel");
 const PostModel = require("../models/PostModel");
 const FollowerModel = require("../models/FollowerModel");
 const uuid = require("uuid").v4;
-const {newLikeNotification, 
+const {
+    newLikeNotification,
     removeLikeNotification,
-    newCommentNotification, 
-    removeCommentNotification} = require('../utilsServer/notificationActions')
+    newCommentNotification,
+    removeCommentNotification
+} = require("../utilsServer/notificationActions");
 
 // CREATE A POST
 
@@ -175,8 +177,8 @@ router.post("/like/:postId", authMiddleware, async (req, res) => {
         await post.likes.unshift({ user: userId });
         await post.save();
 
-        if(post.user.toString()!==userId){
-            await newLikeNotification(userId, postId, post.user.toString())
+        if (post.user.toString() !== userId) {
+            await newLikeNotification(userId, postId, post.user.toString());
         }
 
         return res.status(200).send("Post liked");
@@ -211,8 +213,8 @@ router.put("/unlike/:postId", authMiddleware, async (req, res) => {
 
         await post.save();
 
-        if(post.user.toString()!==userId){
-            await removeLikeNotification(userId, postId, post.user.toString())
+        if (post.user.toString() !== userId) {
+            await removeLikeNotification(userId, postId, post.user.toString());
         }
 
         return res.status(200).send("Post Unliked");
@@ -246,6 +248,8 @@ router.post("/comment/:postId", authMiddleware, async (req, res) => {
     try {
         const { postId } = req.params;
 
+        const { userId } = req;
+
         const { text } = req.body;
 
         if (text.length < 1)
@@ -256,17 +260,23 @@ router.post("/comment/:postId", authMiddleware, async (req, res) => {
         if (!post) return res.status(404).send("Post not found");
 
         const newComment = {
-        _id: uuid(),
-        text,
-        user: req.userId,
-        date: Date.now()
+            _id: uuid(),
+            text,
+            user: req.userId,
+            date: Date.now()
         };
 
         await post.comments.unshift(newComment);
         await post.save();
 
-        if(post.user.toString!==userId){
-            await newCommentNotification(postId, newComment._id, userId, post.user.toString(), text)
+        if (post.user.toString() !== userId) {
+            await newCommentNotification(
+              postId,
+              newComment._id,
+              userId,
+              post.user.toString(),
+              text
+            );
         }
 
         return res.status(200).json(newComment._id);
@@ -300,10 +310,10 @@ router.delete("/:postId/:commentId", authMiddleware, async (req, res) => {
 
             await post.save();
 
-            if(post.user.toString()!==userId){
-                await removeCommentNotification(postId,commentId,userid,post.user.toString())
+            if (post.user.toString() !== userId) {
+                await removeCommentNotification(postId, commentId, userId, post.user.toString());
             }
-            
+
             return res.status(200).send("Deleted Successfully");
         };
 
