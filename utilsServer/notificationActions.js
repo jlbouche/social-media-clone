@@ -114,4 +114,47 @@ const removeCommentNotification = async (postId, commentId, userId, userToNotify
     }
 };
 
-module.exports={newLikeNotification, removeLikeNotification, newCommentNotification, removeCommentNotification}
+const newFollowerNotification = async (userId, userToNotifyId) => {
+
+    try {
+        const user = await NotificationModel.findOne({user: userToNotifyId})
+        const newNotification = {
+            type: "newFollower",
+            user: userId,
+            date: Date.now()
+        }
+
+        await user.notifications.unshift(newNotification);
+
+        await user.save();
+
+        await setNotificationToUnread(userToNotifyId);
+
+        return;
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+const removeFollowerNotification = async (userId, userToNotifyId) => {
+    try {
+     await NotificationModel.findOneAndUpdate(
+        { user: userToNotifyId },
+        { $pull: { notifications: { type: "newFollower", user: userId } } }
+      );
+   
+      return;
+    } catch (error) {
+      console.error(error);
+    }
+};
+
+module.exports={
+    newLikeNotification, 
+    removeLikeNotification, 
+    newCommentNotification, 
+    removeCommentNotification,
+    newFollowerNotification,
+    removeFollowerNotification
+}
