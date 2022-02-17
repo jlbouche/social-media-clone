@@ -36,11 +36,11 @@ export default function Notifications({ notifications, errorLoading, user, userF
                 <Segment color="teal" raised>
                     <div
                         style={{
-                        maxHeight: "40rem",
-                        overflow: "auto",
-                        height: "40rem",
-                        position: "relative",
-                        width: "100%"
+                            maxHeight: "40rem",
+                            overflow: "auto",
+                            height: "40rem",
+                            position: "relative",
+                            width: "100%"
                         }}
                     >
                         <Feed size="small">
