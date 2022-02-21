@@ -18,7 +18,7 @@ import cookie from "js-cookie";
 const scrollDivToBottom = divRef =>
     divRef.current !== null && divRef.current.scrollIntoView({ behaviour: "smooth" });
 
-    function Messages({ chatsData, user }) {
+function Messages({ chatsData, user }) {
     const [chats, setChats] = useState(chatsData);
     const router = useRouter();
 
