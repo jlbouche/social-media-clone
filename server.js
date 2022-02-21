@@ -11,6 +11,13 @@ const connectDb = require("./utilsServer/connectDb");
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
 connectDb();
+const { addUser, removeUser, findConnectedUser } = require("./utilsServer/roomActions");
+const {
+  loadMessages,
+  sendMsg,
+  setMsgToUnread,
+  deleteMsg
+} = require("./utilsServer/messageActions");
 
 io.on("connection", socket => {
     socket.on("join", async ({ userId }) => {
