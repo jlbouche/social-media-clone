@@ -14,6 +14,7 @@ import nprogress from "nprogress";
 import Router, {useRouter} from "next/router";
 import SideMenu from "./SideMenu";
 import Search from "./Search";
+import MobileHeader from "./MobileHeader";
 
 function Layout({ children, user }) {
   const contextRef = createRef();
