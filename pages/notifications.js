@@ -14,19 +14,19 @@ export default function Notifications({ notifications, errorLoading, user, userF
     const [loggedUserFollowStats, setUserFollowStats] = useState(userFollowStats);
 
     useEffect(() => {
-    const notificationRead = async () => {
-        try {
-            await axios.post(
-                `${baseUrl}/api/notifications`,
-                {},
-                { headers: { Authorization: cookie.get("token") } }
-            );
-        } catch (error) {
-            console.log(error);
-        }
-    };
+        const notificationRead = async () => {
+            try {
+                await axios.post(
+                    `${baseUrl}/api/notifications`,
+                    {},
+                    { headers: { Authorization: cookie.get("token") } }
+                );
+            } catch (error) {
+                console.log(error);
+            }
+        };
 
-    notificationRead();
+        notificationRead();
     }, []);
 
     return (
