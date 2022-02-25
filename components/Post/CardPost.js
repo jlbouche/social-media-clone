@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Card,
   Icon,
@@ -31,7 +31,7 @@ function CardPost({ post, user, setPosts, setShowToastr, socket }) {
 
   const [showModal, setShowModal] = useState(false);
 
-  const addPropsToModal = () => ({
+  const addPropsToModal = {
     post,
     user,
     setLikes,
@@ -39,7 +39,7 @@ function CardPost({ post, user, setPosts, setShowToastr, socket }) {
     isLiked,
     comments,
     setComments
-  });
+  };
 
   return (
     <>
@@ -52,9 +52,9 @@ function CardPost({ post, user, setPosts, setShowToastr, socket }) {
         >
           <Modal.Content>
             {post.picUrl ? (
-              <ImageModal {...addPropsToModal()} />
+              <ImageModal {...addPropsToModal} />
             ) : (
-              <NoImageModal {...addPropsToModal()} />
+              <NoImageModal {...addPropsToModal} />
             )}
           </Modal.Content>
         </Modal>
@@ -192,7 +192,11 @@ function CardPost({ post, user, setPosts, setShowToastr, socket }) {
 
             <Divider hidden />
 
-            <CommentInputField user={user} postId={post._id} setComments={setComments} />
+            <CommentInputField
+              user={user}
+              postId={post._id}
+              setComments={setComments}
+            />
           </Card.Content>
         </Card>
       </Segment>
