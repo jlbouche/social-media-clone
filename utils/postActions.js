@@ -3,12 +3,13 @@ import baseUrl from "./baseUrl";
 import catchErrors from "./catchErrors";
 import cookie from "js-cookie";
 
-const Axios = axios.create({
+export const Axios = axios.create({
   baseURL: `${baseUrl}/api/posts`,
   headers: { Authorization: cookie.get("token") }
 });
 
 export const submitNewPost = async (
+  user,
   text,
   location,
   picUrl,
@@ -19,7 +20,14 @@ export const submitNewPost = async (
   try {
     const res = await Axios.post("/", { text, location, picUrl });
 
-    setPosts(prev => [res.data, ...prev]);
+    const newPost = {
+      ...res.data,
+      user,
+      likes: [],
+      comments: []
+    };
+
+    setPosts(prev => [newPost, ...prev]);
     setNewPost({ text: "", location: "" });
   } catch (error) {
     const errorMsg = catchErrors(error);
